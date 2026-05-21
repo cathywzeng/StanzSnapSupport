@@ -2,7 +2,7 @@
 
 > 让每一个不会摆姿势不会构图的人，都能拍出有感染力的照片
 
-StanzSnap 是一款专为摄影新手设计的智能相机应用，结合 AI 场景识别、实时构图指导、姿势检测与反馈，帮助用户在拍摄过程中获得即时的创意灵感，不再为"手往哪放"、"站哪好看"而烦恼。
+StanzSnap 是一款专为摄影新手设计的智能相机应用，结合 AI 场景识别、实时构图指导、姿势检测与反馈，帮助用户在拍摄过程中获得即时的创意灵感。
 
 ![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20Android-000)
 ![License](https://img.shields.io/badge/License-MIT-000)
@@ -74,7 +74,7 @@ MIT © StanzSnap Team
 
 > Empowering everyone who doesn't know how to pose to capture compelling photos
 
-StanzSnap is a smart camera app designed for photography beginners. It combines AI-powered heuristic scene recognition, multi-rule composition guidance (golden spiral, symmetry, negative space, and more), pose detection and feedback to help users get instant creative inspiration while shooting — no more worrying about "where do my hands go" or "where should I stand."
+StanzSnap is a smart camera app designed for photography beginners. It combines AI-powered heuristic scene recognition, multi-rule composition guidance (golden spiral, symmetry, negative space, and more), pose detection and feedback to help users get instant creative inspiration while shooting.
 
 ![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20Android-000)
 ![License](https://img.shields.io/badge/License-MIT-000)
