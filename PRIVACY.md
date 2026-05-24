@@ -1,42 +1,6 @@
-# StanzSnap Privacy Policy
+# StanzSnap 隐私政策
 
-## Last updated: 2026-05-23
-
----
-
-## English
-
-### Data Collection and Sharing
-
-StanzSnap is a smart camera app that helps users capture better photos by applying optimal camera settings for different scenarios.
-
-**We do NOT collect, store, or share any personal data.**
-
-#### What We Don't Collect
-- Location data (even though iOS may request this permission, we do not access or use it)
-- Photos or camera content (all processing happens on-device; photos are saved only to your local album)
-- Usage analytics or crash reports
-- Device identifiers for advertising or tracking
-
-#### Permissions We Use
-- **Camera**: Required to take photos
-- **Photo Library (Save)**: Required to save processed photos to your album
-- **Location**: Declared in Info.plist due to third-party library requirements, but we do NOT access or collect location data
-
-#### Third-Party Services
-We do not use any third-party analytics, advertising, or data collection services.
-
-#### Data Storage
-All app settings are stored locally on your device using encrypted storage (`expo-secure-store`). No data is transmitted to external servers.
-
-#### Children's Privacy
-StanzSnap is not intended for children under 13. We do not knowingly collect any information from children.
-
-#### Changes to This Policy
-We may update this privacy policy from time to time. Any changes will be posted on this page.
-
-#### Contact
-If you have any questions about this privacy policy, please open an issue on our GitHub repository.
+## 最后更新：2026-05-23
 
 ---
 
@@ -76,4 +40,39 @@ StanzSnap 不面向 13 岁以下儿童。我们不会故意收集来自儿童的
 
 ---
 
-*This privacy policy is provided for informational purposes based on the app's actual behavior as of the date listed above.*
+## English
+
+### Data Collection and Sharing
+
+StanzSnap is a smart camera app that helps users capture better photos by applying optimal camera settings for different scenarios.
+
+**We do NOT collect, store, or share any personal data.**
+
+#### What We Don't Collect
+- Location data (even though iOS may request this permission, we do not access or use it)
+- Photos or camera content (all processing happens on-device; photos are saved only to your local album)
+- Usage analytics or crash reports
+- Device identifiers for advertising or tracking
+
+#### Permissions We Use
+- **Camera**: Required to take photos
+- **Photo Library (Save)**: Required to save processed photos to your album
+- **Location**: Declared in Info.plist due to third-party library requirements, but we do NOT access or collect location data
+
+#### Third-Party Services
+We do not use any third-party analytics, advertising, or data collection services.
+
+#### Data Storage
+All app settings are stored locally on your device using encrypted storage (`expo-secure-store`). No data is transmitted to external servers.
+
+#### Children's Privacy
+StanzSnap is not intended for children under 13. We do not knowingly collect any information from children.
+
+#### Changes to This Policy
+We may update this privacy policy from time to time. Any changes will be posted on this page.
+
+#### Contact
+If you have any questions about this privacy policy, please open an issue on our GitHub repository.
+
+---
+
