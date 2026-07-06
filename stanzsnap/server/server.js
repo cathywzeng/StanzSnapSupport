@@ -94,7 +94,7 @@ async function createGitHubIssue({ name, email, category, message, feature }) {
       headers: {
         Authorization: `Bearer ${GITHUB_TOKEN}`,
         'Content-Type': 'application/json',
-        'User-Agent': 'stanzsnap-feedback/1.0',
+        'User-Agent': 'stanzsnap-server/1.0',
       },
       body: JSON.stringify({
         title: `[${category}] ${(name || '匿名用户').slice(0, 40)} — ${message.slice(0, 60)}`,

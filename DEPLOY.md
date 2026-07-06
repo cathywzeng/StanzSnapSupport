@@ -131,7 +131,7 @@ export ADMIN_PASSWORD=你的密码
 npm install -g pm2
 
 # 启动
-GITHUB_TOKEN=你的Token ADMIN_PASSWORD=你的密码 pm2 start server.js --name stanzsnap-feedback
+GITHUB_TOKEN=你的Token ADMIN_PASSWORD=你的密码 pm2 start server.js --name stanzsnap
 
 # 保存 PM2 配置，确保开机自启
 pm2 save
