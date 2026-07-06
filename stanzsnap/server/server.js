@@ -129,16 +129,7 @@ const limiter = rateLimit({
 });
 app.use('/api/', limiter);
 
-// Serve static files from stanzsnap/ directory under /stanzsnap/ path
-app.use('/stanzsnap', express.static(path.join(__dirname, '..')));
-
-// Serve root index.html (landing page) at /
-app.use('/', express.static(path.join(__dirname, '..', '..')));
-
-// /admin → admin.html
-app.get('/admin', (req, res) => res.redirect('/stanzsnap/admin.html'));
-
-// ── Visit counter middleware ───────────────────────────
+// ── Visit counter middleware (before static files) ───
 app.use((req, res, next) => {
   // Only count page visits (HTML or root), skip API calls and assets
   if (req.path === '/' || req.path.endsWith('.html')) {
@@ -151,6 +142,15 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+// Serve static files from stanzsnap/ directory under /stanzsnap/ path
+app.use('/stanzsnap', express.static(path.join(__dirname, '..')));
+
+// Serve root index.html (landing page) at /
+app.use('/', express.static(path.join(__dirname, '..', '..')));
+
+// /admin → admin.html
+app.get('/admin', (req, res) => res.redirect('/stanzsnap/admin.html'));
 
 // ── Public: submit feedback ──────────────────────────
 app.post('/api/feedback', async (req, res) => {
