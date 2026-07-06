@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import express from 'express';
 import cors from 'cors';
+import rateLimit from 'express-rate-limit';
 import Database from 'better-sqlite3';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -114,8 +115,19 @@ async function createGitHubIssue({ name, email, category, message, feature }) {
 
 // ── Express app ──────────────────────────────────────
 const app = express();
-app.use(cors());
+app.disable('x-powered-by');
+app.use(cors({ origin: ['https://www.curiousbuddy.cloud', 'https://curiousbuddy.cloud'] }));
 app.use(express.json({ limit: '16kb' }));
+
+// ── Rate limiting ────────────────────────────────────
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, error: 'too many requests' },
+});
+app.use('/api/', limiter);
 
 // Serve static files from stanzsnap/ directory under /stanzsnap/ path
 app.use('/stanzsnap', express.static(path.join(__dirname, '..')));
