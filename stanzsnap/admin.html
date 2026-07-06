@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StanzSnap 管理后台</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: #f8f5ee;
+      color: #1f2937;
+      min-height: 100vh;
+    }
+    .container { width: min(1120px, calc(100% - 2rem)); margin: 0 auto; }
+
+    /* Login */
+    #login-screen {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 100vh; gap: 1rem;
+    }
+    #login-screen h1 { font-size: 1.5rem; color: #7b5a20; }
+    #login-screen input {
+      padding: 0.7rem 1rem; border: 1px solid #ece4d5; border-radius: 12px;
+      font: inherit; width: 260px; background: #fcfaf6;
+    }
+    #login-screen button {
+      padding: 0.7rem 2rem; border: none; border-radius: 999px;
+      background: #b0843e; color: white; font-weight: 600; font-size: 1rem;
+      cursor: pointer;
+    }
+    #login-screen button:hover { opacity: 0.9; }
+    #login-error { color: #dc2626; font-size: 0.9rem; }
+
+    /* Dashboard */
+    #dashboard { display: none; padding: 2rem 0; }
+    .admin-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .admin-header h1 { font-size: 1.4rem; }
+    .admin-header span { color: #6b7280; font-size: 0.9rem; }
+    .btn-logout {
+      padding: 0.4rem 1rem; border: 1px solid #ece4d5; border-radius: 999px;
+      background: white; cursor: pointer; font: inherit; font-size: 0.85rem;
+    }
+
+    /* Filters */
+    .filters { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .filters button {
+      padding: 0.4rem 1rem; border: 1px solid #ece4d5; border-radius: 999px;
+      background: white; cursor: pointer; font: inherit; font-size: 0.85rem;
+    }
+    .filters button.active { background: #b0843e; color: white; border-color: #b0843e; }
+
+    /* Table */
+    table { width: 100%; border-collapse: collapse; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    th, td { padding: 0.7rem 0.9rem; text-align: left; border-bottom: 1px solid #ece4d5; font-size: 0.88rem; }
+    th { background: #fcfaf6; font-weight: 600; color: #6b7280; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .msg-cell { max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .badge {
+      display: inline-block; padding: 0.15rem 0.5rem; border-radius: 999px;
+      font-size: 0.75rem; font-weight: 600;
+    }
+    .badge-feature { background: #dbeafe; color: #1e40af; }
+    .badge-bug { background: #fce4ec; color: #c62828; }
+    .badge-praise { background: #e8f5e9; color: #2e7d32; }
+    .badge-other { background: #f3f4f6; color: #6b7280; }
+    .issue-link { color: #b0843e; text-decoration: none; font-weight: 600; }
+    .issue-link:hover { text-decoration: underline; }
+    .action-btn {
+      padding: 0.3rem 0.7rem; border: 1px solid #ece4d5; border-radius: 8px;
+      background: white; cursor: pointer; font-size: 0.8rem; margin-right: 0.3rem;
+    }
+    .action-btn:hover { background: #fcfaf6; }
+    .action-btn.github { border-color: #b0843e; color: #b0843e; }
+    .action-btn.github:disabled { opacity: 0.4; cursor: default; }
+    .action-btn.delete { border-color: #dc2626; color: #dc2626; }
+    .empty { text-align: center; color: #6b7280; padding: 3rem; }
+
+    /* Stats */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: #fcfaf6; border-radius: 14px; padding: 1.25rem; border: 1px solid #ece4d5; }
+    .stat-card .num { font-size: 2rem; font-weight: 700; color: #b0843e; }
+    .stat-card .label { font-size: 0.85rem; color: #6b7280; margin-top: 0.2rem; }
+    .stats-two { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .stats-two .card { background: white; border-radius: 16px; padding: 1rem; border: 1px solid #ece4d5; }
+    .stats-two h3 { font-size: 0.9rem; margin-bottom: 0.75rem; color: #6b7280; }
+
+    /* Loading/status */
+    .loading { text-align: center; color: #6b7280; padding: 2rem; }
+
+    /* ===== Responsive admin table ===== */
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+    @media (max-width: 768px) {
+      .table-wrap table { min-width: 700px; }
+    }
+
+    @media (max-width: 640px) {
+      .table-wrap table,
+      .table-wrap thead,
+      .table-wrap tbody,
+      .table-wrap tr,
+      .table-wrap th,
+      .table-wrap td { display: block; }
+
+      .table-wrap thead { display: none; }
+
+      .table-wrap tr {
+        margin-bottom: 1rem;
+        border: 1px solid #ece4d5;
+        border-radius: 14px;
+        padding: 0.8rem;
+        background: white;
+      }
+
+      .table-wrap td {
+        border: none;
+        padding: 0.35rem 0;
+        font-size: 0.88rem;
+        max-width: none !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+      }
+
+      .table-wrap td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #6b7280;
+        display: inline-block;
+        width: 4rem;
+        margin-right: 0.5rem;
+        font-size: 0.8rem;
+        flex-shrink: 0;
+      }
+
+      .table-wrap td:first-child {
+        padding-top: 0.1rem;
+      }
+
+      .table-wrap td:last-child {
+        padding-bottom: 0.1rem;
+      }
+
+      .action-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.88rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Login Screen -->
+  <div id="login-screen">
+    <h1>StanzSnap 管理后台</h1>
+    <input type="password" id="password-input" placeholder="输入管理员密码" />
+    <button onclick="login()">登录</button>
+    <p id="login-error"></p>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboard">
+    <div class="container">
+      <div class="admin-header">
+        <div>
+          <h1>📋 用户留言</h1>
+          <span id="count-label">加载中…</span>
+        </div>
+        <div style="display:flex;gap:.5rem;align-items:center">
+          <button class="btn-logout" onclick="switchTab('feedback')" id="tab-feedback" style="background:#b0843e;color:#fff;border-color:#b0843e">留言管理</button>
+          <button class="btn-logout" onclick="switchTab('stats')" id="tab-stats">访问统计</button>
+          <button class="btn-logout" onclick="logout()">退出登录</button>
+        </div>
+      </div>
+
+      <div id="feedback-section">
+        <div class="filters">
+          <button onclick="setFilter('all')" class="active" data-filter="all">全部</button>
+          <button onclick="setFilter('pending')" data-filter="pending">待处理</button>
+          <button onclick="setFilter('submitted')" data-filter="submitted">已提交 GitHub</button>
+        </div>
+
+        <div id="feedback-list">
+          <p class="loading">加载中…</p>
+        </div>
+      </div>
+
+      <div id="stats-section" style="display:none">
+        <div id="stats-content"><p class="loading">加载中…</p></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

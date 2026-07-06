@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="StanzSnap 是一款面向摄影新手的智能相机应用，帮助用户在拍照时获得实时构图与姿势建议。"
+    />
+    <title>StanzSnap - 用户指南</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="nav container">
+        <a class="brand" href="#top">StanzSnap</a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">☰</button>
+        <div class="nav-links" id="nav-links">
+          <a href="#features" data-i18n="nav.features">功能</a>
+          <a href="#photo-guide" data-i18n="nav.photo">拍照</a>
+          <a href="#editor-guide" data-i18n="nav.editor">编辑</a>
+          <a href="#pose-guide" data-i18n="nav.pose">姿势库</a>
+          <a href="#settings-guide" data-i18n="nav.settings">设置</a>
+          <a href="#feedback" data-i18n="nav.feedback">留言</a>
+          <a href="privacy.html" data-i18n="nav.privacy">隐私</a>
+          <a href="javascript:void(0)" onclick="toggleLang()" class="lang-toggle" data-i18n="lang.switch">EN</a>
+        </div>
+      </nav>
+
+      <div class="container hero-grid" id="top">
+        <div class="hero-copy">
+          <p class="eyebrow" data-i18n="hero.eyebrow">智能相机 · 构图与姿势辅助</p>
+          <h1 data-i18n="hero.title">让每一个不会摆姿势的人，都能拍出有感染力的照片。</h1>
+          <p class="lead" data-i18n="hero.lead">
+            StanzSnap 结合 AI 场景识别、实时构图指导、姿势反馈与 Pose 参考图，
+            帮助新手在拍摄时快速找到灵感与最佳拍摄姿态。
+          </p>
+          <div class="hero-actions">
+            <div class="hero-actions-row">
+              <a class="button secondary" href="javascript:void(0)" onclick="openPreview('ai')" data-i18n="hero.cta-preview-ai">🤖 AI 功能预览</a>
+              <a class="button secondary" href="javascript:void(0)" onclick="openPreview('poser')" data-i18n="hero.cta-preview-poser">🧍 姿势推荐预览</a>
+            </div>
+            <div class="hero-actions-row">
+              <a class="button primary" href="#photo-guide" data-i18n="hero.cta-guide">查看使用指南</a>
+              <a class="button secondary" href="#feedback" data-i18n="hero.cta-feedback">提交建议</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card" id="hero-card">
+          <img id="hero-logo" src="assets/IAP2048_logo.jpg?v=2" alt="StanzSnap App Screenshot" class="hero-screenshot" />
+          <div id="hero-video-box" class="hero-video-box" style="display:none">
+            <button class="hero-video-close" onclick="closeHeroVideo()">✕</button>
+            <video id="hero-video-zh-ai" class="hero-video-player" src="assets/chinese_ai_preview.mp4" controls playsinline preload="none" style="display:none"></video>
+            <video id="hero-video-zh-poser" class="hero-video-player" src="assets/chinese_poser_preview.mp4" controls playsinline preload="none" style="display:none"></video>
+            <video id="hero-video-en-ai" class="hero-video-player" src="assets/english_ai_preview.mp4" controls playsinline preload="none" style="display:none"></video>
+            <video id="hero-video-en-poser" class="hero-video-player" src="assets/english_poser_preview.mp4" controls playsinline preload="none" style="display:none"></video>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- ===== 核心功能 ===== -->
+      <section class="container section" id="features">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="features.eyebrow">核心能力</p>
+          <h2 data-i18n="features.title">从取景到成片，给你更稳的拍照体验</h2>
+        </div>
+
+        <div class="card-grid">
+          <article class="card">
+            <h3 data-i18n="f1.title">🧭 AI 构图指导</h3>
+            <p data-i18n="f1.desc">实时识别人脸与身体姿态，给出三分构图、黄金螺旋、留白、对称、三角布局等多规则评分与建议。</p>
+          </article>
+          <article class="card">
+            <h3 data-i18n="f2.title">🤸 姿势检测与反馈</h3>
+            <p data-i18n="f2.desc">基于 MediaPipe Pose 检测，分析头部、肩膀、手臂、重心等 7 个维度，给出 0–100 的综合姿势评分。</p>
+          </article>
+          <article class="card">
+            <h3 data-i18n="f3.title">📸 相机控制</h3>
+            <p data-i18n="f3.desc">闪光灯、变焦 1×/2×/3×、HDR、EV 曝光补偿、人像虚化、连拍及 12 种场景预设，适应不同拍摄环境。</p>
+          </article>
+          <article class="card">
+            <h3 data-i18n="f4.title">🖼️ 相册编辑</h3>
+            <p data-i18n="f4.desc">拍摄后可调整高光、阴影、饱和度、背景虚化、黄金轮廓描边，以及裁剪、旋转与翻转。</p>
+          </article>
+          <article class="card">
+            <h3 data-i18n="f5.title">🧍 Pose 参考</h3>
+            <p data-i18n="f5.desc">80+ 姿势模板叠加在取景框中，按人数 / 视角 / 标签筛选，快速辅助摆拍。</p>
+          </article>
+          <article class="card">
+            <h3 data-i18n="f6.title">🤖 AI 场景识别</h3>
+            <p data-i18n="f6.desc">自动检测人物/静物场景，人像模式显示姿势评分与构图指导，静物模式提供构图建议与物体分类。</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===== 拍照指南 ===== -->
+      <section class="container section alt-bg" id="photo-guide">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="photo.eyebrow">Step by Step</p>
+          <h2 data-i18n="photo.title">📷 拍照指南</h2>
+          <p class="section-desc" data-i18n="photo.desc">了解 StanzSnap 相机界面的每一个控制项，轻松拍出好照片。</p>
+        </div>
+
+        <!-- 1 -->
+        <div class="guide-block">
+          <div class="guide-number">1</div>
+          <div class="guide-content">
+            <h3 data-i18n="photo.1.title">对焦与缩放</h3>
+            <p data-i18n="photo.1.text">点击画面任意位置即可对焦。双指捏合可平滑缩放，也可以点击焦距倍数快速切换 <strong>1× / 2× / 3×</strong>。</p>
+          </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="guide-block">
+          <div class="guide-number">2</div>
+          <div class="guide-content">
+            <h3 data-i18n="photo.2.title">上控制栏</h3>
+            <p data-i18n="photo.2.lead">相机顶部控制栏从左到右排列，提供以下功能：</p>
+            <div class="control-bar">
+              <span class="control-item" data-i18n="photo.2.ctrl1"><strong>闪光灯</strong><small>常亮手电筒补光</small></span>
+              <span class="control-item" data-i18n="photo.2.ctrl2"><strong>焦距</strong><small>1× / 2× / 3×</small></span>
+              <span class="control-item" data-i18n="photo.2.ctrl3"><strong>HDR</strong><small>高动态范围</small></span>
+              <span class="control-item" data-i18n="photo.2.ctrl4"><strong>曝光 EV</strong><small>滑动调节亮度</small></span>
+              <span class="control-item" data-i18n="photo.2.ctrl5"><strong>虚化</strong><small>人像背景虚化</small></span>
+              <span class="control-item" data-i18n="photo.2.ctrl6"><strong>场景</strong><small>人物 / 静物</small></span>
+            </div>
+            <p class="guide-note" data-i18n="photo.2.note1">💡 <strong>虚化提示：</strong>相机虚化不支持多点聚焦，如需精细调节请到相册使用后期处理。</p>
+            <p class="guide-note" data-i18n="photo.2.note2">💡 <strong>场景模式：</strong>选择「人物」可查看姿势评分 + 构图指导；选择「静物」查看构图建议 + AI 物体分类。</p>
+            <img src="assets/chinese/2_upper_control.jpg" alt="上控制栏" class="guide-screenshot" />
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="guide-block">
+          <div class="guide-number">3</div>
+          <div class="guide-content">
+            <h3 data-i18n="photo.3.title">下控制栏</h3>
+            <p data-i18n="photo.3.lead">底部控制栏提供拍摄相关的核心操作：</p>
+            <div class="control-bar">
+              <span class="control-item" data-i18n="photo.3.ctrl1"><strong>🔄 切换</strong><small>前后相机</small></span>
+              <span class="control-item" data-i18n="photo.3.ctrl2"><strong>📸 连拍</strong><small>3 或 5 张</small></span>
+              <span class="control-item highlight" data-i18n="photo.3.ctrl3"><strong>⏺ 快门</strong><small>拍照 / 启动 AI</small></span>
+              <span class="control-item" data-i18n="photo.3.ctrl4"><strong>🤖 AI</strong><small>场景检测开关</small></span>
+              <span class="control-item" data-i18n="photo.3.ctrl5"><strong>🧍 姿势</strong><small>参考图叠加</small></span>
+            </div>
+            <img src="assets/chinese/3_bottom_control.jpg" alt="下控制栏" class="guide-screenshot" />
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="guide-block">
+          <div class="guide-number">4</div>
+          <div class="guide-content">
+            <h3 data-i18n="photo.4.title">AI 场景检测</h3>
+            <p data-i18n="photo.4.text">基于 MediaPipe 目标检测和 EfficientNet 图像分类的协同推理，自动识别当前拍摄环境：</p>
+            <ul data-i18n="photo.4.list">
+              <li><strong>人像模式：</strong>显示姿势评分 + 构图指导（三分法、黄金螺旋等），帮助调整姿态</li>
+              <li><strong>静物模式：</strong>提供构图建议，快门上方显示 AI 检测到的物体分类名称，点击可切换模式</li>
+            </ul>
+            <p class="guide-note" data-i18n="photo.3.note2">💡 <strong>AI 场景检测：</strong>开启后自动识别当前场景，快门上方会显示 AI 检测到的物体分类及推荐模式。</p>
+            <p data-i18n="photo.4.note">所有 AI 推理均在设备端本地完成，无需网络连接，保护隐私安全。</p>
+            <div class="guide-screenshot-row">
+              <img src="assets/chinese/4_AIdetection_portrait.jpg" alt="人像模式" class="guide-screenshot" />
+              <img src="assets/chinese/4_AIdetection_still_object.jpg" alt="静物模式" class="guide-screenshot" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="guide-block">
+          <div class="guide-number">5</div>
+          <div class="guide-content">
+            <h3 data-i18n="photo.5.title">姿势参考叠加</h3>
+            <p data-i18n="photo.5.text">在取景框上叠加金色轮廓参考图，帮助被拍者找到姿势灵感：</p>
+            <ol data-i18n="photo.5.list">
+              <li>点击底部 👤 按钮打开姿势库</li>
+              <li>选择姿势图（可按人数 / 视角 / 标签筛选）</li>
+              <li>点击姿势图 → 自动叠加到取景框，相机同步调整变焦</li>
+              <li>再次点击 👤 按钮可移除叠加</li>
+            </ol>
+            <p data-i18n="photo.5.note">内置 <strong>80+</strong> 姿势模板，覆盖单人、双人、多人场景。</p>
+            <img src="assets/chinese/5_poselayout.jpg" alt="姿势参考叠加" class="guide-screenshot" />
+          </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="guide-block">
+          <div class="guide-number">6</div>
+          <div class="guide-content">
+            <h3 data-i18n="photo.6.title">连拍模式</h3>
+            <p data-i18n="photo.6.text">快门左边的按钮控制连拍模式，点击一次是三连拍，点击两次是五连拍，点击三次是关掉连拍模式。</p>
+            <p data-i18n="photo.6.text2">设置页面可以切换连拍模式的间隔，短间隔一般用于多张抓拍高速运动，长间隔可以用来自拍。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 相册编辑 ===== -->
+      <section class="container section" id="editor-guide">
+        <div class="section-heading">
+          <h2 data-i18n="editor.title">🖼️ 相册后期处理指南</h2>
+          <p class="section-desc" data-i18n="editor.desc">拍摄后进入相册，对照片进行精细调整，让成片更完美。</p>
+        </div>
+
+        <div class="guide-block">
+          <div class="guide-number">1</div>
+          <div class="guide-content">
+            <h3 data-i18n="editor.1.title">进入相册并裁剪调整</h3>
+            <p data-i18n="editor.1.text">点击底部「相册」标签页，查看所有拍摄的照片。点击任意照片进入大图预览。</p>
+            <p data-i18n="editor.1.text2">点击编辑图标进入编辑工具栏。</p>
+            <p data-i18n="editor.1.text3">调整构图和方向，支持自由的裁剪比例、任意角度旋转以及水平/垂直翻转。</p>
+            <img src="assets/chinese/gallery_1_edit.jpg" alt="编辑入口" class="guide-screenshot" />
+          </div>
+        </div>
+
+        <div class="guide-block">
+          <div class="guide-number">2</div>
+          <div class="guide-content">
+            <h3 data-i18n="editor.2.title">一键美化</h3>
+            <p data-i18n="editor.2.text">点击 ✨ 图标进入美化模式，基于 Skia GPU Shader 实时处理：</p>
+            <ul data-i18n="editor.2.list">
+              <li><strong>饱和度：</strong>调节色彩鲜艳程度</li>
+              <li><strong>阴影：</strong>恢复欠曝区域的细节</li>
+              <li><strong>高光：</strong>恢复过曝区域的细节</li>
+            </ul>
+            <p data-i18n="editor.2.note">所有调整实时预览，可一键切换原片对比效果。</p>
+            <img src="assets/chinese/gallery_2_tuning.jpg" alt="一键美化" class="guide-screenshot" />
+          </div>
+        </div>
+
+        <div class="guide-block">
+          <div class="guide-number">3</div>
+          <div class="guide-content">
+            <h3 data-i18n="editor.3.title">背景虚化</h3>
+            <p data-i18n="editor.3.text">为照片添加景深效果，模拟大光圈拍摄：</p>
+            <ol data-i18n="editor.3.list">
+              <li>点击「背景虚化」按钮</li>
+              <li>在画面中轻点选择焦点（支持选择<strong>多个</strong>焦点）</li>
+              <li>拖动程度条调节虚化强度</li>
+              <li>自动应用虚化效果（iOS 使用 Core Image，Android 使用 OpenCV）</li>
+            </ol>
+            <img src="assets/chinese/gallery_3_blur.jpg" alt="背景虚化" class="guide-screenshot" />
+          </div>
+        </div>
+
+        <div class="guide-block">
+          <div class="guide-number">4</div>
+          <div class="guide-content">
+            <h3 data-i18n="editor.4.title">黄金轮廓描边</h3>
+            <p data-i18n="editor.4.text">自动识别人物主体并生成金色轮廓描边，可作为姿势参考图导入：</p>
+            <ol data-i18n="editor.4.list">
+              <li>选择「多点选」模式</li>
+              <li>在画面中轻点感兴趣的主体（可点选<strong>多个</strong>主体）</li>
+              <li>点击「生成」按钮</li>
+              <li>保存后在相册中可看到生成的姿势轮廓图</li>
+            </ol>
+            <p data-i18n="editor.4.note">生成的轮廓图可导入姿势库，方便日后调用。</p>
+            <img src="assets/chinese/gallery_4_goldline.jpg" alt="黄金轮廓描边" class="guide-screenshot" />
+          </div>
+        </div>
+
+        <div class="guide-block">
+          <div class="guide-number">5</div>
+          <div class="guide-content">
+            <h3 data-i18n="editor.5.title">保存编辑</h3>
+            <p data-i18n="editor.5.text">完成编辑后点击「Save」保存编辑结果。所有处理均在本地完成，照片保存到系统相册。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 姿势库 ===== -->
+      <section class="container section alt-bg" id="pose-guide">
+        <div class="section-heading">
+          <h2 data-i18n="pose.title">🧍 姿势库维护</h2>
+          <p class="section-desc" data-i18n="pose.desc">内置 80+ 姿势模板，支持自定义导入与标签管理。</p>
+        </div>
+
+        <div class="guide-block">
+          <div class="guide-number">1</div>
+          <div class="guide-content">
+            <h3 data-i18n="pose.1.title">系统姿势</h3>
+            <p data-i18n="pose.1.text">应用内置 <strong>80+</strong> 专业姿势轮廓图，按以下维度筛选：</p>
+            <ul data-i18n="pose.1.list">
+              <li><strong>人数：</strong>单人 / 双人 / 多人</li>
+              <li><strong>视角：</strong>远景 (D) / 全身 (F) / 半身 (H) / 特写 (C) — 可多选</li>
+              <li><strong>标签：</strong>兄弟 / 闺蜜 / 情侣 / 长辈 / 坐姿 / 栏杆 — 可多选</li>
+            </ul>
+            <p data-i18n="pose.1.note">选中姿势图后，点击即可叠加到取景框使用。</p>
+            <div class="guide-screenshot-row">
+              <img src="assets/chinese/pose_1_filter1.jpg" alt="姿势库筛选" class="guide-screenshot" />
+              <img src="assets/chinese/pose_1_filter2.jpg" alt="姿势库浏览" class="guide-screenshot" />
+            </div>
+          </div>
+        </div>
+
+        <div class="guide-block">
+          <div class="guide-number">2</div>
+          <div class="guide-content">
+            <h3 data-i18n="pose.2.title">自定义姿势</h3>
+            <p data-i18n="pose.2.text">「我的」标签页支持从相册导入用户自己生成的姿势轮廓图（通过黄金轮廓描边功能生成）。</p>
+            <p data-i18n="pose.2.text2">导入后即可像系统姿势一样在拍照时使用。</p>
+            <img src="assets/chinese/pose_2_importpose.jpg" alt="自定义姿势导入" class="guide-screenshot" />
+          </div>
+        </div>
+
+        <div class="guide-block">
+          <div class="guide-number">3</div>
+          <div class="guide-content">
+            <h3 data-i18n="pose.3.title">标签管理</h3>
+            <p data-i18n="pose.3.text">长按姿势轮廓图可编辑标签。标签说明：</p>
+            <ul data-i18n="pose.3.list">
+              <li>预设标签包括人数、近景/远景、兄弟、闺蜜、坐姿等分类</li>
+              <li>点击左上角「标签管理」可自由添加新标签</li>
+              <li>标签会作为姿势自动建议和搜索过滤的关键字</li>
+              <li>拍照时系统会根据标签智能推荐匹配的姿势</li>
+            </ul>
+            <div class="guide-screenshot-row">
+              <img src="assets/chinese/pose_3_tag_edit_per_photo.jpg" alt="标签编辑" class="guide-screenshot" />
+              <img src="assets/chinese/pose_3_tag_management.jpg" alt="标签管理" class="guide-screenshot" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 设置 ===== -->
+      <section class="container section" id="settings-guide">
+        <div class="section-heading">
+          <h2 data-i18n="settings.title">⚙️ 设置</h2>
+          <p class="section-desc" data-i18n="settings.desc">在设置标签页中调整应用参数。</p>
+        </div>
+
+        <div class="settings-grid">
+          <div class="settings-card">
+            <h3 data-i18n="s1.title">📅 使用状态</h3>
+            <p data-i18n="s1.desc">查看使用到期时间和购买状态，可通过付费墙解锁完整功能。</p>
+          </div>
+          <div class="settings-card">
+            <h3 data-i18n="s2.title">🖼️ 照片画质</h3>
+            <p data-i18n="s2.desc">选择拍摄照片的压缩质量和分辨率，平衡画质与存储空间。</p>
+          </div>
+          <div class="settings-card">
+            <h3 data-i18n="s3.title">⏱️ 连拍间隔</h3>
+            <p data-i18n="s3.desc">切换连拍模式的拍摄间隔：短间隔适合高速运动抓拍，长间隔适合自拍。</p>
+          </div>
+          <div class="settings-card">
+            <h3 data-i18n="s4.title">📐 构图辅助线</h3>
+            <p data-i18n="s4.desc">选择取景框叠加的参考线类型：三分法 / 黄金螺旋 / 对称 / 三角 / 对角线。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 留言 ===== -->
+      <section class="container section" id="feedback">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="feedback.eyebrow">用户留言</p>
+          <h2 data-i18n="feedback.title">留下你的建议，帮助我们把 StanzSnap 做得更好</h2>
+        </div>
+
+        <form class="feedback-form feedback-form--standalone" id="feedback-form">
+          <label>
+            <span data-i18n="feedback.name">昵称</span>
+            <input type="text" id="name" name="name" data-i18n="feedback.placeholder-name" placeholder="例如：小明" required />
+          </label>
+          <label>
+            <span data-i18n="feedback.email">电子邮箱</span>
+            <input type="email" id="email" name="email" data-i18n="feedback.placeholder-email" placeholder="name@example.com" />
+          </label>
+          <label>
+            <span data-i18n="feedback.category">分类</span>
+            <select id="category" name="category" class="feedback-select">
+              <option value="feature" data-i18n="feedback.cat-feature">功能建议</option>
+              <option value="bug" data-i18n="feedback.cat-bug">问题反馈</option>
+              <option value="praise" data-i18n="feedback.cat-praise">称赞</option>
+              <option value="other" data-i18n="feedback.cat-other">其他</option>
+            </select>
+          </label>
+          <label>
+            <span data-i18n="feedback.message">留言内容</span>
+            <textarea id="message" name="message" rows="5" data-i18n="feedback.placeholder-message" placeholder="你想告诉我们什么？" required></textarea>
+          </label>
+          <label>
+            <span data-i18n="feedback.feature">想增加的功能</span>
+            <input type="text" id="feature" name="feature" data-i18n="feedback.placeholder-feature" placeholder="例如：更多姿势模板" />
+          </label>
+          <button type="submit" class="button primary" data-i18n="feedback.submit">提交留言</button>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-content">
+        <p>© 2026 StanzSnap</p>
+        <a href="privacy.html" data-i18n="footer.privacy">隐私政策</a>
+      </div>
+    </footer>
+
+    <script src="i18n.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+    var ALL_VIDEOS = ['zh-ai', 'zh-poser', 'en-ai', 'en-poser'];
+
+    function getVideoId(lang, key) {
+      return 'hero-video-' + lang + '-' + key;
+    }
+
+    function openPreview(key) {
+      var logo = document.getElementById('hero-logo');
+      var box = document.getElementById('hero-video-box');
+      var lang = localStorage.getItem('stanzsnap-lang') || 'zh';
+      var video = document.getElementById(getVideoId(lang, key));
+
+      // Hide all other videos
+      ALL_VIDEOS.forEach(function (id) {
+        document.getElementById('hero-video-' + id).style.display = 'none';
+      });
+
+      video.style.display = 'block';
+      logo.style.display = 'none';
+      box.style.display = 'block';
+      video.load();
+      video.play()['catch'](function () {});
+    }
+
+    function closeHeroVideo() {
+      var logo = document.getElementById('hero-logo');
+      var box = document.getElementById('hero-video-box');
+      ALL_VIDEOS.forEach(function (id) {
+        var v = document.getElementById('hero-video-' + id);
+        v.pause();
+        v.currentTime = 0;
+        v.style.display = 'none';
+      });
+      box.style.display = 'none';
+      logo.style.display = 'block';
+    }
+
+    // Hook into language toggle — close video if playing
+    var origToggle = window.toggleLang;
+    if (origToggle) {
+      var _origToggle = origToggle;
+      window.toggleLang = function () {
+        closeHeroVideo();
+        _origToggle();
+      };
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var h = document.getElementById('hamburger');
+      var n = document.getElementById('nav-links');
+      if (h && n) {
+        h.addEventListener('click', function () {
+          n.classList.toggle('nav-open');
+          h.textContent = n.classList.contains('nav-open') ? '✕' : '☰';
+        });
+        n.querySelectorAll('a').forEach(function (a) {
+          a.addEventListener('click', function () {
+            n.classList.remove('nav-open');
+            h.textContent = '☰';
+          });
+        });
+      }
+    });
+    </script>
+  </body>
+</html>

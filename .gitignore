@@ -1,0 +1,19 @@
+# Database
+stanzsnap/server/feedback.db
+stanzsnap/server/feedback.db-shm
+stanzsnap/server/feedback.db-wal
+
+# Node
+node_modules/
+package-lock.json
+
+# Logs
+*.log
+stanzsnap/server/feedback-*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/settings.json
